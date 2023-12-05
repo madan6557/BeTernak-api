@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2023 at 12:31 PM
+-- Generation Time: Dec 05, 2023 at 02:24 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `brands` (
   `brand_id` int(100) NOT NULL,
   `brand_tittle` text NOT NULL,
-  `user_id` int(100) NOT NULL
+  `user_id` int(100) NOT NULL,
+  `location` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -69,7 +70,7 @@ CREATE TABLE `orders` (
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
-  `trx_id` varchar(255) NOT NULL,
+  `transfer_id` varchar(255) NOT NULL,
   `p_status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -93,6 +94,21 @@ CREATE TABLE `products` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `review`
+--
+
+CREATE TABLE `review` (
+  `review_id` int(11) NOT NULL,
+  `user_id` int(100) NOT NULL,
+  `brand_id` int(100) NOT NULL,
+  `product_id` int(100) NOT NULL,
+  `rate` int(10) NOT NULL,
+  `comment` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_info`
 --
 
@@ -104,7 +120,9 @@ CREATE TABLE `user_info` (
   `password` varchar(300) NOT NULL,
   `address1` varchar(300) NOT NULL,
   `address2` varchar(11) NOT NULL,
-  `isAdmin` tinyint(1) NOT NULL
+  `isAdmin` tinyint(1) NOT NULL,
+  `location` text NOT NULL,
+  `no_rek` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -153,6 +171,15 @@ ALTER TABLE `products`
   ADD KEY `product_brand` (`product_brand`);
 
 --
+-- Indexes for table `review`
+--
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `user_id` (`user_id`,`brand_id`,`product_id`),
+  ADD KEY `brand_id` (`brand_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `user_info`
 --
 ALTER TABLE `user_info`
@@ -193,6 +220,12 @@ ALTER TABLE `products`
   MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
@@ -228,6 +261,14 @@ ALTER TABLE `orders`
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`product_brand`) REFERENCES `brands` (`brand_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`product_cat`) REFERENCES `categories` (`cat_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `review`
+--
+ALTER TABLE `review`
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `review_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
