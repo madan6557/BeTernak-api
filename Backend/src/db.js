@@ -1,12 +1,11 @@
-// src/db.js
 const mysql = require('mysql');
 
 // Konfigurasi koneksi ke Cloud SQL
 const connection = mysql.createConnection({
   host: 'EXTERNAL_IP',
   user: 'user',
-  password: 'your-cloud-sql-password',
-  database: 'your-database-name',
+  password: 'password',
+  database: 'database-name',
 });
 
 // Buka koneksi
