@@ -4,23 +4,21 @@
 const mlConnection = require('./mlConnection');
 
 const uploadToGCS = async (fileName, fileBuffer, folder) => {
-  const bucket = gcs.bucket('your-gcs-bucket-name'); // Ganti dengan nama bucket GCS Anda
+  const bucket = gcs.bucket('gcs-bucket-name'); // Ganti dengan nama bucket GCS 
   const file = bucket.file(`${folder}/${fileName}`);
   await file.save(fileBuffer);
 };
 
 const downloadFromGCS = (fileName, folder) => {
-  const bucket = gcs.bucket('your-gcs-bucket-name'); // Ganti dengan nama bucket GCS Anda
+  const bucket = gcs.bucket('gcs-bucket-name'); // Ganti dengan nama bucket GCS 
   const file = bucket.file(`${folder}/${fileName}`);
   return file.download();
 };
 
 const getPrediction = async (req, res) => {
-    // Contoh penggunaan model machine learning
     const inputData = req.body.data;
     const prediction = await mlConnection.predictUsingMLModel(inputData);
-  
-    // Lakukan sesuatu dengan hasil prediksi
+
     res.json({ prediction });
   };
   
