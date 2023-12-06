@@ -1,8 +1,8 @@
 const { Storage } = require('@google-cloud/storage');
 
 const storage = new Storage({
-  projectId: 'your-project-id', 
-  keyFilename: 'path/to/your/keyfile.json',
+  projectId: 'project-id', 
+  keyFilename: 'path/to/keyfile.json',
 });
 
 module.exports = storage;
