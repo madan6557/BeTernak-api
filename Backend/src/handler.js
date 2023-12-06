@@ -1,4 +1,3 @@
-// src/handler.js
 // const db = require('./db');
 // const gcs = require('./gcs');
 const mlConnection = require('./mlConnection');
