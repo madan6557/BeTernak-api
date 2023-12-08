@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Des 2023 pada 11.24
+-- Waktu pembuatan: 08 Des 2023 pada 09.44
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -31,16 +31,17 @@ CREATE TABLE `brands` (
   `brand_id` int(100) NOT NULL,
   `brand_tittle` text NOT NULL,
   `user_id` int(100) NOT NULL,
-  `location` text NOT NULL
+  `location` text NOT NULL,
+  `brand_image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `brands`
 --
 
-INSERT INTO `brands` (`brand_id`, `brand_tittle`, `user_id`, `location`) VALUES
-(1, 'SAYUR', 1, '000,000,000'),
-(2, 'adada', 2, '00,000,000,0');
+INSERT INTO `brands` (`brand_id`, `brand_tittle`, `user_id`, `location`, `brand_image`) VALUES
+(1, 'SAYUR', 1, '000,000,000', ''),
+(2, 'adada', 2, '00,000,000,0', '');
 
 -- --------------------------------------------------------
 
@@ -49,7 +50,7 @@ INSERT INTO `brands` (`brand_id`, `brand_tittle`, `user_id`, `location`) VALUES
 --
 
 CREATE TABLE `cart` (
-  `id` int(10) NOT NULL,
+  `cart_id` int(10) NOT NULL,
   `product_id` int(10) NOT NULL,
   `ip_add` varchar(250) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -60,8 +61,9 @@ CREATE TABLE `cart` (
 -- Dumping data untuk tabel `cart`
 --
 
-INSERT INTO `cart` (`id`, `product_id`, `ip_add`, `user_id`, `qty`) VALUES
-(1, 1, '12311131313', 1, 12);
+INSERT INTO `cart` (`cart_id`, `product_id`, `ip_add`, `user_id`, `qty`) VALUES
+(1, 1, '12311131313', 1, 12),
+(2, 2, '1231123131313', 2, 10);
 
 -- --------------------------------------------------------
 
@@ -102,7 +104,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `product_id`, `qty`, `transfer_id`, `p_status`) VALUES
-(1, 1, 1, 1, '123123123123', 'arrive');
+(1, 1, 1, 1, '123123123123', 'done'),
+(2, 1, 2, 5, '134535335', 'done');
 
 -- --------------------------------------------------------
 
@@ -127,9 +130,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_desc`, `product_image`, `product_keywords`, `stock`) VALUES
-(1, 1, 1, 'Mayur', 1000, 'ini adlah Sayur jenis MAYUR', 'sayurmayur.png', 'sayur', 10),
+(1, 1, 1, 'Mayur', 5000, 'ini adlah Sayur jenis MAYUR', 'sayurmayur.png', 'sayur', 100),
 (2, 2, 2, 'ffafabnasdf', 345352, 'dcgazndrses gsesdftnefgasdfsdjnegb sgawejnghaefgeg eggwsjnegh', 'gawetjneawt.png', 'dfawna', 110),
-(3, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', 'sayurmayur1.png', 'sayur', 10);
+(3, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', 'sayurmayur1.png', 'sayur', 10),
+(4, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', '', 'sayur', 100),
+(5, 1, 1, 'Mayur12', 1000, 'ini adlah Sayur jenis MAYUR1', '', 'sayur', 110);
 
 -- --------------------------------------------------------
 
@@ -177,8 +182,9 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`) VALUES
-(1, 'madan', 'api', 'madan@api.com', '1234', 'jln. jalan', 'Banjarbaru', 1, '000,000,000', '297346208'),
-(2, 'asdqa', 'asdadadad', 'addasd@DGGS', '123123', 'VSFFSSFS,ERYFSDFSDFMSDFSFS,FSF', 'sdfsffsf', 1, '00,000,000', '14124256121231223');
+(1, 'aulia', 'madan', 'madan@api.com', '1234w', 'jln. jalan', 'BanjarLama', 1, '000,000,000', '297346208'),
+(2, 'asdqa', 'asdadadad', 'addasd@DGGS', '123123', 'VSFFSSFS,ERYFSDFSDFMSDFSFS,FSF', 'sdfsffsf', 1, '00,000,000', '14124256121231223'),
+(3, 'aulia', 'madan', 'madan@api.com', '1234w', 'jln. jalan', 'BanjarLama', 1, '000,000,000', '297346208');
 
 --
 -- Indexes for dumped tables
@@ -195,7 +201,7 @@ ALTER TABLE `brands`
 -- Indeks untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`cart_id`),
   ADD UNIQUE KEY `user_id` (`user_id`),
   ADD UNIQUE KEY `product_id` (`product_id`),
   ADD UNIQUE KEY `qty` (`qty`),
@@ -254,7 +260,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cart_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
@@ -266,13 +272,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `review`
@@ -284,7 +290,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT untuk tabel `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

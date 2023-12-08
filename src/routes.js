@@ -17,6 +17,8 @@ const {
   addOrder,
   addToCart,
   updateUserById,
+  updateProductById,
+  updateOrderById,
   getPrediction,
 } = require('./handler');
 
@@ -64,5 +66,11 @@ router.post('/api/cart/add', addToCart);
 
 // Rute Update user_info berdasarkan ID
 router.put('/api/users/update/:userId', updateUserById);
+
+// Rute untuk memperbarui produk berdasarkan ID produk
+router.put('/api/products/update/:productId', updateProductById);
+
+// Rute untuk memperbarui pesanan berdasarkan ID pesanan
+router.put('/api/orders/update/:orderId', updateOrderById);
 
 module.exports = router;

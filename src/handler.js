@@ -336,6 +336,63 @@ const updateUserById = (req, res) => {
   });
 };
 
+const updateProductById = async (req, res) => {
+  const productId = req.params.productId;
+  const updatedProduct = req.body;
+
+  try {
+    // Cek apakah ada berkas gambar yang disertakan
+    if (req.file && req.file.buffer) {
+      const imageBuffer = req.file.buffer;
+      const contentType = req.file.mimetype;
+
+      // Menyimpan gambar ke folder 'product_images'
+      const imageUrl = await uploadToGCS(
+        imageBuffer,
+        `product_images/${Date.now()}_${req.file.originalname}`,
+        contentType
+      );
+
+      // Hanya update gambar jika berhasil diunggah
+      if (imageUrl) {
+        updatedProduct.product_image = imageUrl;
+      }
+    }
+
+    const updateQuery = 'UPDATE products SET ? WHERE product_id = ?';
+    
+    db.query(updateQuery, [updatedProduct, productId], (err, results) => {
+      if (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+
+      res.json({ message: 'Produk berhasil diperbarui' });
+    });
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const updateOrderById = (req, res) => {
+  const orderId = req.params.orderId;
+  const updatedOrder = req.body;
+
+  const updateQuery = 'UPDATE orders SET ? WHERE order_id = ?';
+
+  db.query(updateQuery, [updatedOrder, orderId], (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Pesanan berhasil diperbarui' });
+  });
+};
+
 
 const getPrediction = async (req, res) => {
   // Contoh penggunaan model machine learning
@@ -363,4 +420,6 @@ module.exports = {
   getReviewsByBrand,
   getPrediction,
   updateUserById,
+  updateProductById,
+  updateOrderById,
 };
