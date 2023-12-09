@@ -1,7 +1,7 @@
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 
-const keyFilePath = path.join(__dirname, 'path-to-your-key-file.json');
+const keyFilePath = path.join(__dirname, '../key/credentials.js');
 const storage = new Storage({
   keyFilename: keyFilePath,
 });
