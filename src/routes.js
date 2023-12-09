@@ -37,96 +37,96 @@ const {
 //Get
 
 // Rute mendapatkan user info berdsarkan ID
-router.get('/api/users/id/:userId', getUserInfoById);
+router.get('/api/user/id/:userId', getUserInfoById);
 
 // Rute untuk mendapatkan produk berdasarkan kategori
-router.get('/api/products/category/:categoryId', getProductByCategory);
+router.get('/api/product/category/:categoryId', getProductByCategory);
 
 // Rute untuk mendapatkan produk berdasarkan ID produk
-router.get('/api/products/id/:productId', getProductById);
+router.get('/api/product/id/:productId', getProductById);
 
 // Rute untuk mendapatkan produk berdasarkan ID brand
-router.get('/api/products/brand/:brandId', getProductByBrand);
+router.get('/api/product/brand/:brandId', getProductByBrand);
 
 // Rute untuk mendapatkan merek berdasarkan ID brand
-router.get('/api/brands/id/:brandId', getBrandById);
+router.get('/api/brand/id/:brandId', getBrandById);
 
 // Rute untuk mendapatkan pesanan berdasarkan ID pengguna
-router.get('/api/orders/user/:userId', getOrdersByUserId);
+router.get('/api/order/user/:userId', getOrdersByUserId);
 
 // Rute untuk mendapatkan pesanan berdasarkan ID pengguna
-router.get('/api/orders/id/:orderId', getOrdersById);
+router.get('/api/order/id/:orderId', getOrdersById);
 
 // Rute untuk mendapatkan merek (brands) berdasarkan ID pengguna
-router.get('/api/brands/user/:userId', getBrandsByUserId);
+router.get('/api/brand/user/:userId', getBrandsByUserId);
 
 // Rute untuk mendapatkan isi keranjang (cart) berdasarkan ID pengguna
 router.get('/api/cart/user/:userId', getCartByUserId);
 
 //Rute ubtuk mendapatkan review product
-router.get('/api/reviews/product/:productId', getReviewsByProduct);
+router.get('/api/review/product/:productId', getReviewsByProduct);
 
 //Rute ubtuk mendapatkan review brand
-router.get('/api/reviews/brand/:brandId', getReviewsByBrand);
+router.get('/api/review/brand/:brandId', getReviewsByBrand);
 
 //Add
 
 // Rute untuk menambahkan user baru
-router.post('/api/users/add', addUser);
+router.post('/api/user/add', addUser);
 
 // Rute untuk menambah produk baru
-router.post('/api/products/add', addProduct);
+router.post('/api/product/add', addProduct);
 
 // Rute untuk menambah brand baru
-router.post('/api/brands/add', addBrand);
+router.post('/api/brand/add', addBrand);
 
 // Rute untuk Menambahkan order baru
-router.post('/api/orders/add', addOrder);
+router.post('/api/order/add', addOrder);
 
 // Rute untuk Menambahkan ke keranjang
 router.post('/api/cart/add', addToCart);
 
 // Rute untuk menambahkan review product
-router.post('/api/reviews/add', addProductReview);
+router.post('/api/review/add', addProductReview);
 
 //Update
 
 // Rute Update user_info berdasarkan ID
-router.put('/api/users/update/:userId', updateUserById);
+router.put('/api/user/update/:userId', updateUserById);
 
 // Rute untuk memperbarui produk berdasarkan ID produk
-router.put('/api/products/update/:productId', updateProductById);
+router.put('/api/product/update/:productId', updateProductById);
 
 // Rute untuk memperbarui pesanan berdasarkan ID pesanan
-router.put('/api/orders/update/:orderId', updateOrderById);
+router.put('/api/order/update/:orderId', updateOrderById);
 
 // Rute untuk mengupdate item di keranjang berdasarkan Cart ID
 router.put('/api/cart/update/:cartId', updateCartById);
 
 // Rute untuk memperbarui review product berdasarkan ID
-router.put('/api/reviews/update/:reviewId', updateProductReviewById);
+router.put('/api/review/update/:reviewId', updateProductReviewById);
 
 // Rute Update brand berdasarkan ID
-router.put('/api/brands/update/:brandId', updateBrandById);
+router.put('/api/brand/update/:brandId', updateBrandById);
 
 //Delete
 
 // Rute untuk menghapus user_info berdasarkan ID
-router.delete('/api/users/delete/:userId', deleteUserById);
+router.delete('/api/user/delete/:userId', deleteUserById);
 
 // Rute untuk menghapus produk berdasarkan ID produk
-router.delete('/api/products/delete/:productId', deleteProductById);
+router.delete('/api/product/delete/:productId', deleteProductById);
 
 // Rute untuk menghapus pesanan berdasarkan ID pesanan
-router.delete('/api/orders/delete/:orderId', deleteOrderById);
+router.delete('/api/order/delete/:orderId', deleteOrderById);
 
 // Rute untuk menghapus item di keranjang berdasarkan Cart ID
 router.delete('/api/cart/delete/:cartId', deleteCartById);
 
 // Rute untuk menghapus review product berdasarkan ID
-router.delete('/api/reviews/delete/:reviewId', deleteProductReviewById);
+router.delete('/api/review/delete/:reviewId', deleteProductReviewById);
 
 // Rute untuk menghapus brand berdasarkan ID
-router.delete('/api/brands/delete/:brandId', deleteBrandById);
+router.delete('/api/brand/delete/:brandId', deleteBrandById);
 
 module.exports = router;
