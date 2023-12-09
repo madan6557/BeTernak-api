@@ -8,7 +8,7 @@ const getGCSImageUrl = (imageName) => {
     return `https://storage.googleapis.com/${bucketName}/${imageName}`
   } catch (error) {
     console.error('Error getting GCS image URL:', error)
-    // Jika terjadi kesalahan, kembalikan string kosong atau sesuai kebutuhan hehe
+    // Jika terjadi kesalahan, kembalikan string kosong atau sesuai kebutuhan
     return ''
   }
 }
