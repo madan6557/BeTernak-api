@@ -5,12 +5,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const EventEmitter = require('events');
-const myEmitter = new EventEmitter();
 
 const port = 3000;
 const routes = require('./routes');
-
-// myEmitter.setMaxListeners(10);
 
 // Middleware untuk mengizinkan parsing JSON
 app.use(bodyParser.json());

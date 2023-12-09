@@ -8,7 +8,7 @@ const displayCurrentListeners = () => {
 };
 
 // Atur jumlah maksimum listener
-myEmitter.setMaxListeners(10); // Ganti dengan jumlah yang sesuai dengan kebutuhan aplikasi Anda
+myEmitter.setMaxListeners(10);
 
 // // Tambahkan listener yang melebihi batas
 // for (let i = 0; i < 15; i++) {

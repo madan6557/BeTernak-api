@@ -44,6 +44,11 @@ const getProductByCategory = (req, res) => {
       return;
     }
 
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Product not found' });
+      return;
+    }
+
     const productsWithImageUrl = results.map(product => {
       return {
         ...product,
@@ -63,6 +68,11 @@ const getProductById = (req, res) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Product not found' });
       return;
     }
 
@@ -88,6 +98,11 @@ const getProductByBrand = (req, res) => {
       return;
     }
 
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Product not found' });
+      return;
+    }
+
     const productsWithImageUrl = results.map(product => {
       return {
         ...product,
@@ -96,6 +111,33 @@ const getProductByBrand = (req, res) => {
     });
 
     res.json({ data: productsWithImageUrl });
+  });
+};
+
+const getBrandById = (req, res) => {
+  const brandId = req.params.brandId;
+  const query = 'SELECT * FROM brands WHERE brand_id = ?';
+
+  db.query(query, brandId, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Brand not found' });
+      return;
+    }
+
+    const brandsWithImageUrl = results.map(brand => {
+      return {
+        ...brand,
+        brand_image: getGCSImageUrl('brand-images', brand.brand_image),
+      };
+    });
+
+    res.json({ data: brandWithImageUrl });
   });
 };
 
@@ -119,6 +161,11 @@ const getOrdersByUserId = (req, res) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Order not found' });
       return;
     }
 
@@ -149,6 +196,11 @@ const getOrdersById = (req, res) => {
       return;
     }
 
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Order not found' });
+      return;
+    }
+
     res.json({ data: results });
   });
 };
@@ -169,6 +221,11 @@ const getBrandsByUserId = (req, res) => {
       return;
     }
 
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Brand not found' });
+      return;
+    }
+
     res.json({ data: results });
   });
 };
@@ -186,6 +243,11 @@ const getCartByUserId = (req, res) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Cart not found' });
       return;
     }
 
@@ -211,6 +273,11 @@ const getReviewsByProduct = (req, res) => {
       return;
     }
 
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Reviews not found' });
+      return;
+    }
+
     res.json({ data: results });
   });
 };
@@ -223,6 +290,10 @@ const getReviewsByBrand = (req, res) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Reviews not found' });
       return;
     }
 
@@ -282,6 +353,42 @@ const addProduct = async (req, res) => {
   }
 };
 
+const addBrand = async (req, res) => {
+  const brandData = req.body;
+
+  try {
+    // Cek apakah ada berkas gambar yang disertakan
+    if (req.file && req.file.buffer) {
+      const imageBuffer = req.file.buffer;
+      const contentType = req.file.mimetype;
+
+      // Menyimpan gambar ke folder 'brand_images'
+      const imageUrl = await uploadToGCS(
+        imageBuffer,
+        `brand_images/${Date.now()}_${req.file.originalname}`,
+        contentType
+      );
+
+      brandData.brand_image = imageUrl;
+    }
+
+    const query = 'INSERT INTO brands SET ?';
+
+    db.query(query, brandData, (err, results) => {
+      if (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+
+      res.json({ message: 'Merek baru berhasil ditambahkan', brandId: results.insertId });
+    });
+  } catch (error) {
+    console.error('Error adding brand:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 const addOrder = async (req, res) => {
   try {
     const order = req.body;
@@ -316,6 +423,22 @@ const addToCart = (req, res) => {
     }
 
     res.json({ message: 'Item berhasil dimasukkan ke keranjang' });
+  });
+};
+
+const addProductReview = (req, res) => {
+  const reviewData = req.body;
+
+  const query = 'INSERT INTO review SET ?';
+
+  db.query(query, reviewData, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Review berhasil ditambahkan' });
   });
 };
 
@@ -393,6 +516,172 @@ const updateOrderById = (req, res) => {
   });
 };
 
+const updateCartById = (req, res) => {
+  const cartId = req.params.cartId;
+  const updatedCartItem = req.body;
+
+  const query = 'UPDATE cart SET ? WHERE cart_id = ?';
+
+  db.query(query, [updatedCartItem, cartId], (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Item di keranjang berhasil diupdate' });
+  });
+};
+
+const updateProductReviewById = (req, res) => {
+  const reviewId = req.params.reviewId;
+  const updatedReviewData = req.body;
+
+  const query = 'UPDATE review SET ? WHERE review_id = ?';
+
+  db.query(query, [updatedReviewData, reviewId], (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Review product berhasil diperbarui' });
+  });
+};
+
+const updateBrandById = async (req, res) => {
+  const brandId = req.params.brandId;
+  const updatedBrandInfo = req.body;
+
+  try {
+    // Cek apakah ada berkas gambar yang disertakan
+    if (req.file && req.file.buffer) {
+      const imageBuffer = req.file.buffer;
+      const contentType = req.file.mimetype;
+
+      // Menyimpan gambar ke folder 'brand_images'
+      const imageUrl = await uploadToGCS(
+        imageBuffer,
+        `brand_images/${Date.now()}_${req.file.originalname}`,
+        contentType
+      );
+
+      updatedBrandInfo.brand_image = imageUrl;
+    }
+
+    const query = 'UPDATE brands SET ? WHERE brand_id = ?';
+
+    db.query(query, [updatedBrandInfo, brandId], (err, results) => {
+      if (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+
+      res.json({ message: 'Mengupdate informasi brand berhasil' });
+    });
+  } catch (error) {
+    console.error('Error updating brand:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const deleteUserById = (req, res) => {
+  const userId = req.params.userId;
+
+  const query = 'DELETE FROM user_info WHERE user_id = ?';
+
+  db.query(query, userId, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'User berhasil dihapus' });
+  });
+};
+
+const deleteProductById = (req, res) => {
+  const productId = req.params.productId;
+
+  const query = 'DELETE FROM products WHERE product_id = ?';
+
+  db.query(query, productId, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Produk berhasil dihapus' });
+  });
+};
+
+const deleteOrderById = (req, res) => {
+  const orderId = req.params.orderId;
+
+  const query = 'DELETE FROM orders WHERE order_id = ?';
+
+  db.query(query, orderId, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Pesanan berhasil dihapus' });
+  });
+};
+
+const deleteCartById = (req, res) => {
+  const cartId = req.params.cartId;
+
+  const query = 'DELETE FROM cart WHERE cart_id = ?';
+
+  db.query(query, cartId, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Keranjang berhasil dihapus' });
+  });
+};
+
+const deleteProductReviewById = (req, res) => {
+  const reviewId = req.params.reviewId;
+
+  const query = 'DELETE FROM review WHERE review_id = ?';
+
+  db.query(query, reviewId, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Reviews berhasil dihapus' });
+  });
+};
+
+const deleteBrandById = (req, res) => {
+  const brandId = req.params.brandId;
+
+  const query = 'DELETE FROM brands WHERE brand_id = ?';
+
+  db.query(query, brandId, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json({ message: 'Brand berhasil dihapus' });
+  });
+};
 
 const getPrediction = async (req, res) => {
   // Contoh penggunaan model machine learning
@@ -410,16 +699,28 @@ module.exports = {
   getProductByBrand,
   addUser,
   addProduct,
+  addBrand,
   addOrder,
   addToCart,
+  addProductReview,
   getOrdersByUserId,
   getOrdersById,
   getBrandsByUserId,
   getCartByUserId,
   getReviewsByProduct,
   getReviewsByBrand,
+  getBrandById,
   getPrediction,
   updateUserById,
   updateProductById,
   updateOrderById,
+  updateCartById,
+  updateProductReviewById,
+  updateBrandById,
+  deleteUserById,
+  deleteProductById,
+  deleteOrderById,
+  deleteCartById,
+  deleteProductReviewById,
+  deleteBrandById,
 };
