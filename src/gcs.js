@@ -1,13 +1,14 @@
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 
-const keyFilePath = path.join(__dirname, '../key/credentials.js');
+const keyFilePath = path.join(__dirname, '../key/credentials.json');
 const storage = new Storage({
   keyFilename: keyFilePath,
 });
 
 // Gantilah 'your-bucket-name' dengan nama bucket GCS Anda
-const bucket = storage.bucket('your-bucket-name');
+const bucketName = 'okheh21'
+const bucket = storage.bucket(bucketName);
 
 const uploadToGCS = (fileBuffer, destination, contentType) => {
   const file = bucket.file(destination);
@@ -33,4 +34,5 @@ const uploadToGCS = (fileBuffer, destination, contentType) => {
 
 module.exports = {
   uploadToGCS,
+  bucketName,
 };
