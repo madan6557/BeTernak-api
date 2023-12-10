@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Des 2023 pada 09.44
+-- Waktu pembuatan: 10 Des 2023 pada 14.18
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -62,8 +62,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `product_id`, `ip_add`, `user_id`, `qty`) VALUES
-(1, 1, '12311131313', 1, 12),
-(2, 2, '1231123131313', 2, 10);
+(1, 1, '123111300313', 1, 12);
 
 -- --------------------------------------------------------
 
@@ -104,7 +103,6 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `product_id`, `qty`, `transfer_id`, `p_status`) VALUES
-(1, 1, 1, 1, '123123123123', 'done'),
 (2, 1, 2, 5, '134535335', 'done');
 
 -- --------------------------------------------------------
@@ -122,19 +120,19 @@ CREATE TABLE `products` (
   `product_desc` text NOT NULL,
   `product_image` text NOT NULL,
   `product_keywords` text NOT NULL,
-  `stock` int(100) NOT NULL
+  `stock` int(100) NOT NULL,
+  `sales` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `products`
 --
 
-INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_desc`, `product_image`, `product_keywords`, `stock`) VALUES
-(1, 1, 1, 'Mayur', 5000, 'ini adlah Sayur jenis MAYUR', 'sayurmayur.png', 'sayur', 100),
-(2, 2, 2, 'ffafabnasdf', 345352, 'dcgazndrses gsesdftnefgasdfsdjnegb sgawejnghaefgeg eggwsjnegh', 'gawetjneawt.png', 'dfawna', 110),
-(3, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', 'sayurmayur1.png', 'sayur', 10),
-(4, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', '', 'sayur', 100),
-(5, 1, 1, 'Mayur12', 1000, 'ini adlah Sayur jenis MAYUR1', '', 'sayur', 110);
+INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_desc`, `product_image`, `product_keywords`, `stock`, `sales`) VALUES
+(1, 1, 1, 'Mayur', 5000, 'ini adlah Sayur jenis MAYUR', '1702181721014_0001_cat.png', 'sayur', 100, 0),
+(2, 2, 2, 'ffafabnasdf', 345352, 'dcgazndrses gsesdftnefgasdfsdjnegb sgawejnghaefgeg eggwsjnegh', 'gawetjneawt.png', 'dfawna', 110, 0),
+(3, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', 'sayurmayur1.png', 'sayur', 10, 0),
+(4, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', '', 'sayur', 100, 0);
 
 -- --------------------------------------------------------
 
@@ -156,7 +154,7 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`review_id`, `user_id`, `brand_id`, `product_id`, `rate`, `comment`) VALUES
-(1, 1, 1, 1, 5, 'sangat berSAYUR');
+(1, 1, 1, 1, 5, 'sangat berSAYUR dan MAYUR');
 
 -- --------------------------------------------------------
 
@@ -174,17 +172,17 @@ CREATE TABLE `user_info` (
   `address2` varchar(11) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL,
   `location` text NOT NULL,
-  `no_rek` varchar(100) NOT NULL
+  `no_rek` varchar(100) NOT NULL,
+  `user_image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `user_info`
 --
 
-INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`) VALUES
-(1, 'aulia', 'madan', 'madan@api.com', '1234w', 'jln. jalan', 'BanjarLama', 1, '000,000,000', '297346208'),
-(2, 'asdqa', 'asdadadad', 'addasd@DGGS', '123123', 'VSFFSSFS,ERYFSDFSDFMSDFSFS,FSF', 'sdfsffsf', 1, '00,000,000', '14124256121231223'),
-(3, 'aulia', 'madan', 'madan@api.com', '1234w', 'jln. jalan', 'BanjarLama', 1, '000,000,000', '297346208');
+INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`, `user_image`) VALUES
+(1, 'auliaRi', 'madan', 'madan@api.com', '1234w', 'jln. jalan', 'BanjarLama', 1, '000,000,000', '123121412', '1702182437398_0001_cat.png'),
+(2, 'asdqa', 'asdadadad', 'addasd@DGGS', '123123', 'VSFFSSFS,ERYFSDFSDFMSDFSFS,FSF', 'sdfsffsf', 1, '00,000,000', '14124256121231223', '');
 
 --
 -- Indexes for dumped tables
@@ -254,7 +252,7 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT untuk tabel `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `cart`
@@ -284,7 +282,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT untuk tabel `review`
 --
 ALTER TABLE `review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_info`
