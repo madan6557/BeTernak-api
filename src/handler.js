@@ -2,10 +2,10 @@ const db = require('./db.js')
 const mlConnection = require('./mlConnection')
 const { uploadToGCS, bucketName } = require('./gcs');
 
-const getGCSImageUrl = (imageName) => {
+const getGCSImageUrl = (folder, imageName) => {
   try {
     // Coba mendapatkan URL gambar dari GCS
-    return `https://storage.googleapis.com/${bucketName}/${imageName}`
+    return `https://storage.googleapis.com/${bucketName}/${folder}/${imageName}`
   } catch (error) {
     console.error('Error getting GCS image URL:', error)
     // Jika terjadi kesalahan, kembalikan string kosong atau sesuai kebutuhan
@@ -32,7 +32,7 @@ const getUserInfoById = (req, res) => {
     const usersWithImageUrl = results.map((user) => {
       return {
         ...user,
-        user_image: getGCSImageUrl('user-images', user.imageFileName),
+        user_image: getGCSImageUrl('user-images', user.user_image),
       };
     });
     res.json({ data: usersWithImageUrl })
@@ -322,13 +322,14 @@ const addUser = async (req, res) => {
     const contentType = req.file.mimetype;
 
     // Menyimpan gambar ke folder 'user-images'
+    const filename = Date.now()+'_'+req.file.originalname
     const imageUrl = await uploadToGCS(
       imageBuffer,
-      `user-images/${Date.now()}_${req.file.originalname}`,
+      `user-images/${filename}`,
       contentType
     );
 
-    newUser.imageFileName = imageUrl; // Simpan nama file gambar di database
+    newUser.imageFileName = filename;
   }
 
 
@@ -355,14 +356,15 @@ const addProduct = async (req, res) => {
       const imageBuffer = req.file.buffer
       const contentType = req.file.mimetype
 
-      // Menyimpan gambar ke folder 'product_images'
+      // Menyimpan gambar ke folder 'product-images'
+      const filename = Date.now()+'_'+req.file.originalname
       const imageUrl = await uploadToGCS(
         imageBuffer,
-        `product_images/${Date.now()}_${req.file.originalname}`,
+        `product-images/${filename}`,
         contentType,
       )
+      product.product_image = filename
 
-      product.product_image = imageUrl
     }
 
     const query = 'INSERT INTO products SET ?'
@@ -392,14 +394,16 @@ const addBrand = async (req, res) => {
       const imageBuffer = req.file.buffer
       const contentType = req.file.mimetype
 
-      // Menyimpan gambar ke folder 'brand_images'
+      // Menyimpan gambar ke folder 'brand-images'
+      const filename = Date.now()+'_'+req.file.originalname
       const imageUrl = await uploadToGCS(
         imageBuffer,
-        `brand_images/${Date.now()}_${req.file.originalname}`,
+        `brand-images/${filename}`,
         contentType,
       )
 
-      brandData.brand_image = imageUrl
+      brandData.brand_image = filename
+
     }
 
     const query = 'INSERT INTO brands SET ?'
@@ -491,15 +495,14 @@ const updateUserById = async (req, res) => {
       const imageBuffer = req.file.buffer;
       const contentType = req.file.mimetype;
 
-      // Menyimpan gambar ke folder 'user_images'
+      // Menyimpan gambar ke folder 'user-images'
+      const filename = Date.now()+'_'+req.file.originalname
       const imageUrl = await uploadToGCS(
         imageBuffer,
-        `user_images/${Date.now()}_${req.file.originalname}`,
+        `user-images/${filename}`,
         contentType
       );
-
-      // Menambahkan URL gambar ke data pengguna yang akan diupdate
-      updatedUserInfo.imageFileName = imageUrl;
+      updatedUserInfo.user_image = filename;
     }
 
     // Lakukan pembaruan ke database
@@ -530,17 +533,14 @@ const updateProductById = async (req, res) => {
       const imageBuffer = req.file.buffer
       const contentType = req.file.mimetype
 
-      // Menyimpan gambar ke folder 'product_images'
+      // Menyimpan gambar ke folder 'product-images'
+      const filename = Date.now()+'_'+req.file.originalname
       const imageUrl = await uploadToGCS(
         imageBuffer,
-        `product_images/${Date.now()}_${req.file.originalname}`,
+        `product-images/${filename}`,
         contentType,
       )
-
-      // Hanya update gambar jika berhasil diunggah
-      if (imageUrl) {
-        updatedProduct.product_image = imageUrl
-      }
+        updatedProduct.product_image = filename   
     }
 
     const updateQuery = 'UPDATE products SET ? WHERE product_id = ?'
@@ -621,14 +621,15 @@ const updateBrandById = async (req, res) => {
       const imageBuffer = req.file.buffer
       const contentType = req.file.mimetype
 
-      // Menyimpan gambar ke folder 'brand_images'
+      // Menyimpan gambar ke folder 'brand-images'
+      const filename = Date.now()+'_'+req.file.originalname
       const imageUrl = await uploadToGCS(
         imageBuffer,
-        `brand_images/${Date.now()}_${req.file.originalname}`,
+        `brand-images/${filename}`,
         contentType,
       )
 
-      updatedBrandInfo.brand_image = imageUrl
+      updatedBrandInfo.brand_image = filename
     }
 
     const query = 'UPDATE brands SET ? WHERE brand_id = ?'

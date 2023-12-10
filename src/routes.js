@@ -1,5 +1,6 @@
 // src/routes.js
 const express = require('express');
+const multer = require('multer');
 const router = express.Router();
 const {
   getUserInfoById,
@@ -33,6 +34,9 @@ const {
   deleteBrandById,
   getPrediction,
 } = require('./handler');
+
+const storage = multer.memoryStorage(); // Gunakan memori untuk menyimpan file (Anda dapat menyesuaikan sesuai kebutuhan)
+const upload = multer({ storage: storage });
 
 //Get
 
@@ -72,13 +76,13 @@ router.get('/api/review/brand/:brandId', getReviewsByBrand);
 //Add
 
 // Rute untuk menambahkan user baru
-router.post('/api/user/add', addUser);
+router.post('/api/user/add',upload.single('user_image'), addUser);
 
 // Rute untuk menambah produk baru
-router.post('/api/product/add', addProduct);
+router.post('/api/product/add',upload.single('product_image'), addProduct);
 
 // Rute untuk menambah brand baru
-router.post('/api/brand/add', addBrand);
+router.post('/api/brand/add',upload.single('brand_image'), addBrand);
 
 // Rute untuk Menambahkan order baru
 router.post('/api/order/add', addOrder);
@@ -92,10 +96,10 @@ router.post('/api/review/add', addProductReview);
 //Update
 
 // Rute Update user_info berdasarkan ID
-router.put('/api/user/update/:userId', updateUserById);
+router.put('/api/user/update/:userId', upload.single('user_image'), updateUserById);
 
 // Rute untuk memperbarui produk berdasarkan ID produk
-router.put('/api/product/update/:productId', updateProductById);
+router.put('/api/product/update/:productId',upload.single('product_image'), updateProductById);
 
 // Rute untuk memperbarui pesanan berdasarkan ID pesanan
 router.put('/api/order/update/:orderId', updateOrderById);
@@ -107,7 +111,7 @@ router.put('/api/cart/update/:cartId', updateCartById);
 router.put('/api/review/update/:reviewId', updateProductReviewById);
 
 // Rute Update brand berdasarkan ID
-router.put('/api/brand/update/:brandId', updateBrandById);
+router.put('/api/brand/update/:brandId',upload.single('brand_image'), updateBrandById);
 
 //Delete
 
