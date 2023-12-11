@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Des 2023 pada 10.28
+-- Waktu pembuatan: 11 Des 2023 pada 13.42
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -29,11 +29,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `brands` (
   `brand_id` int(100) NOT NULL,
-  `brand_tittle` text NOT NULL,
+  `brand_title` text NOT NULL,
   `user_id` int(100) NOT NULL,
   `location` text NOT NULL,
   `brand_image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `brands`
+--
+
+INSERT INTO `brands` (`brand_id`, `brand_title`, `user_id`, `location`, `brand_image`) VALUES
+(4, 'Toko Sayur', 9, '00,000,00,0', 'images');
 
 -- --------------------------------------------------------
 
@@ -94,7 +101,7 @@ CREATE TABLE `products` (
   `product_cat` int(100) NOT NULL,
   `product_brand` int(100) NOT NULL,
   `product_title` varchar(255) NOT NULL,
-  `product_price` float(100) NOT NULL,
+  `product_price` int(100) NOT NULL,
   `product_desc` text NOT NULL,
   `product_image` text NOT NULL,
   `product_keywords` text NOT NULL,
@@ -143,6 +150,7 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `username`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`, `user_image`) VALUES
+(1, 'Lorem', 'Ipsum', 'testajabwanng@gmail.com', 'lorem', '$2b$10$IAEJVfsjsNskRu2z/PijHuR6aQACa2JJACg7V7WVtD7VWZnOC3GjK', 'Jln. Jalan, Desa, RT/RW, Kec. Kecamatan, Kab. Kabupaten, Provinsi, Negara', 'Bumi', 0, '000, 000, 000', '123123123123123', 'image URL'),
 (8, '', '', '', 'sora', '$2b$10$7oAUIjLipPSel0a0K5NzF.RZB2ki/nKFy063Pg1zK7ydyUl9CDTBO', '', '', 0, '', '', ''),
 (9, '', '', '', 'sola', '$2b$10$X1S6m6/NPkzHh5rf3TSdWuzFmu45bU2V1SwSEU3xkQDuvYPEjmff6', '', '', 0, '', '', '');
 
@@ -214,7 +222,7 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT untuk tabel `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `cart`
@@ -250,7 +258,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT untuk tabel `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
