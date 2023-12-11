@@ -1,15 +1,12 @@
 const express = require('express');
-const res = require('express/lib/response');
 const app = express();
-const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const EventEmitter = require('events');
 
 const port = 3000;
 const routes = require('./routes');
 
 // Middleware untuk mengizinkan parsing JSON
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(morgan('tiny'));
 
