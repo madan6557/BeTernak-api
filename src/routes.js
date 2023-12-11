@@ -35,7 +35,7 @@ const {
   getPrediction,
 } = require('./handler');
 
-const storage = multer.memoryStorage(); // Gunakan memori untuk menyimpan file (Anda dapat menyesuaikan sesuai kebutuhan)
+const storage = multer.memoryStorage(); // Gunakan memori untuk menyimpan file
 const upload = multer({ storage: storage });
 
 //Get
