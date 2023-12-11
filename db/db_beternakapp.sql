@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Des 2023 pada 14.18
+-- Waktu pembuatan: 11 Des 2023 pada 10.28
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -35,14 +35,6 @@ CREATE TABLE `brands` (
   `brand_image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `brands`
---
-
-INSERT INTO `brands` (`brand_id`, `brand_tittle`, `user_id`, `location`, `brand_image`) VALUES
-(1, 'SAYUR', 1, '000,000,000', ''),
-(2, 'adada', 2, '00,000,000,0', '');
-
 -- --------------------------------------------------------
 
 --
@@ -56,13 +48,6 @@ CREATE TABLE `cart` (
   `user_id` int(10) NOT NULL,
   `qty` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `cart`
---
-
-INSERT INTO `cart` (`cart_id`, `product_id`, `ip_add`, `user_id`, `qty`) VALUES
-(1, 1, '123111300313', 1, 12);
 
 -- --------------------------------------------------------
 
@@ -98,13 +83,6 @@ CREATE TABLE `orders` (
   `p_status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `orders`
---
-
-INSERT INTO `orders` (`order_id`, `user_id`, `product_id`, `qty`, `transfer_id`, `p_status`) VALUES
-(2, 1, 2, 5, '134535335', 'done');
-
 -- --------------------------------------------------------
 
 --
@@ -124,16 +102,6 @@ CREATE TABLE `products` (
   `sales` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `products`
---
-
-INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_desc`, `product_image`, `product_keywords`, `stock`, `sales`) VALUES
-(1, 1, 1, 'Mayur', 5000, 'ini adlah Sayur jenis MAYUR', '1702181721014_0001_cat.png', 'sayur', 100, 0),
-(2, 2, 2, 'ffafabnasdf', 345352, 'dcgazndrses gsesdftnefgasdfsdjnegb sgawejnghaefgeg eggwsjnegh', 'gawetjneawt.png', 'dfawna', 110, 0),
-(3, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', 'sayurmayur1.png', 'sayur', 10, 0),
-(4, 1, 1, 'Mayur1', 1000, 'ini adlah Sayur jenis MAYUR1', '', 'sayur', 100, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -149,13 +117,6 @@ CREATE TABLE `review` (
   `comment` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `review`
---
-
-INSERT INTO `review` (`review_id`, `user_id`, `brand_id`, `product_id`, `rate`, `comment`) VALUES
-(1, 1, 1, 1, 5, 'sangat berSAYUR dan MAYUR');
-
 -- --------------------------------------------------------
 
 --
@@ -167,6 +128,7 @@ CREATE TABLE `user_info` (
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `email` varchar(300) NOT NULL,
+  `username` varchar(300) NOT NULL,
   `password` varchar(300) NOT NULL,
   `address1` varchar(300) NOT NULL,
   `address2` varchar(11) NOT NULL,
@@ -180,9 +142,9 @@ CREATE TABLE `user_info` (
 -- Dumping data untuk tabel `user_info`
 --
 
-INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`, `user_image`) VALUES
-(1, 'auliaRi', 'madan', 'madan@api.com', '1234w', 'jln. jalan', 'BanjarLama', 1, '000,000,000', '123121412', '1702182437398_0001_cat.png'),
-(2, 'asdqa', 'asdadadad', 'addasd@DGGS', '123123', 'VSFFSSFS,ERYFSDFSDFMSDFSFS,FSF', 'sdfsffsf', 1, '00,000,000', '14124256121231223', '');
+INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `username`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`, `user_image`) VALUES
+(8, '', '', '', 'sora', '$2b$10$7oAUIjLipPSel0a0K5NzF.RZB2ki/nKFy063Pg1zK7ydyUl9CDTBO', '', '', 0, '', '', ''),
+(9, '', '', '', 'sola', '$2b$10$X1S6m6/NPkzHh5rf3TSdWuzFmu45bU2V1SwSEU3xkQDuvYPEjmff6', '', '', 0, '', '', '');
 
 --
 -- Indexes for dumped tables
@@ -288,7 +250,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT untuk tabel `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
