@@ -2,6 +2,13 @@
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
+
+const {
+  register, 
+  login, 
+  forgotPassword,
+} = require('./handlers/authHandler');
+
 const {
   getUserInfoById,
   getProductByCategory,
@@ -14,29 +21,48 @@ const {
   getCartByUserId,
   getReviewsByProduct,
   getReviewsByBrand,
+} = require('./handlers/getHandler');
+
+const {
   addUser,
   addProduct,
   addBrand,
   addOrder,
   addToCart,
   addProductReview,
+} = require('./handlers/postHandler');
+
+const {
   updateUserById,
   updateProductById,
   updateOrderById,
   updateCartById,
   updateProductReviewById,
   updateBrandById,
+} = require('./handlers/putHandler');
+
+const {
   deleteUserById,
   deleteProductById,
   deleteOrderById,
   deleteCartById,
   deleteProductReviewById,
   deleteBrandById,
-  getPrediction,
-} = require('./handler');
+} = require('./handlers/deleteHandler');
 
 const storage = multer.memoryStorage(); // Gunakan memori untuk menyimpan file
 const upload = multer({ storage: storage });
+
+//Rute untuk autentikasi
+
+// Rute untuk register
+router.post('/api/register', register);
+
+// Rute untuk login
+router.post('/api/login', login);
+
+// Rute untuk lupa password
+router.get('/api/forgot-password/:username', forgotPassword);
 
 //Get
 
