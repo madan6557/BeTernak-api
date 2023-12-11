@@ -1,39 +1,5 @@
 const db = require('../db.js')
 const { uploadToGCS} = require('../gcs');
-
-const addUser = async (req, res) => {
-    const newUser = req.body
-    const query = 'INSERT INTO user_info SET ?'
-  
-    if (req.file && req.file.buffer) {
-      const imageBuffer = req.file.buffer;
-      const contentType = req.file.mimetype;
-  
-      // Menyimpan gambar ke folder 'user-images'
-      const filename = Date.now()+'_'+req.file.originalname
-      const imageUrl = await uploadToGCS(
-        imageBuffer,
-        `user-images/${filename}`,
-        contentType
-      );
-  
-      newUser.imageFileName = filename;
-    }
-  
-  
-    db.query(query, newUser, (err, results) => {
-      if (err) {
-        console.error('Error executing query:', err)
-        res.status(500).json({ error: 'Internal Server Error' })
-        return
-      }
-  
-      res.json({
-        message: 'User baru berhasil ditambahkan',
-        userId: results.insertId,
-      })
-    })
-  }
   
   const addProduct = async (req, res) => {
     const product = req.body
@@ -168,7 +134,6 @@ const addUser = async (req, res) => {
   }
 
   module.exports = {
-    addUser,
     addProduct,
     addBrand,
     addOrder,

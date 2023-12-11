@@ -34,7 +34,7 @@ const getUserInfoById = (req, res) => {
         user_image: getGCSImageUrl('user-images', user.user_image),
       };
     });
-    res.json({ data: usersWithImageUrl })
+    res.status(200).json({ data: usersWithImageUrl })
   })
 }
 
@@ -142,7 +142,7 @@ const getBrandById = (req, res) => {
       }
     })
 
-    res.json({ data: brandsWithImageUrl })
+    res.status(200).json({ data: brandsWithImageUrl })
   })
 }
 

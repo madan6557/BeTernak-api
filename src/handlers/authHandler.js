@@ -33,8 +33,8 @@ const register = async (req, res) => {
           return;
         }
 
-        res.json({
-          message: 'User baru berhasil ditambahkan',
+        res.status(200).json({
+          message: 'Register succes!',
           userId: results.insertId,
         });
       });
@@ -68,12 +68,12 @@ const login = async (req, res) => {
           // Buat token JWT sebagai tanda otentikasi
           const token = jwt.sign({ userId: user.user_id, username: user.username }, 'secret_key', { expiresIn: '1h' });
 
-          res.json({ token });
+          res.status(200).json({ message: 'Log in succes!', token });
         } else {
           res.status(401).json({ error: 'Invalid credentials' });
         }
       } else {
-        res.status(401).json({ error: 'User not found' });
+        res.status(404).json({ error: 'User not found' });
       }
     });
   } catch (error) {
@@ -110,17 +110,17 @@ const updatePasswordInDatabase = async (username, newPassword) => {
 const forgotPassword = async (req, res) => {
   try {
     // Mendapatkan data pengguna dari request, misalnya, username
-    const username = req.params.username;
+    const user = req.body;
 
     // Menghasilkan kata sandi acak baru
     const newPassword = generateRandomPassword();
 
     // Mengupdate kata sandi pengguna di database
-    const updateSuccess = await updatePasswordInDatabase(username, newPassword);
+    const updateSuccess = await updatePasswordInDatabase(user.username, newPassword);
 
     if (updateSuccess) {
       // Kirim respons berhasil dan kata sandi baru ke frontend
-      res.json({ message: 'New password sent successfully', newPassword });
+      res.status(200).json({ message: 'New password sent successfully', newPassword });
     } else {
       res.status(404).json({ error: 'User not found' });
     }

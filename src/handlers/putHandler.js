@@ -31,7 +31,7 @@ const updateUserById = async (req, res) => {
           return;
         }
   
-        res.json({ message: 'Mengupdate informasi user berhasil' });
+        res.status(200).json({ message: 'Update user details succes!' });
       });
     } catch (error) {
       console.error('Error updating user:', error);
@@ -68,7 +68,7 @@ const updateUserById = async (req, res) => {
           return
         }
   
-        res.json({ message: 'Produk berhasil diperbarui' })
+        res.status.json({ message: 'Produk berhasil diperbarui' })
       })
     } catch (error) {
       console.error('Error updating product:', error)

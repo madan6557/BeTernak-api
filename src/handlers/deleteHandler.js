@@ -13,7 +13,7 @@ const deleteUserById = (req, res) => {
         return
       }
   
-      res.json({ message: 'User berhasil dihapus' })
+      res.status(200).json({ message: 'User deleted succesfully!' })
     })
   }
   

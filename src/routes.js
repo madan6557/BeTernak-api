@@ -24,7 +24,6 @@ const {
 } = require('./handlers/getHandler');
 
 const {
-  addUser,
   addProduct,
   addBrand,
   addOrder,
@@ -62,7 +61,7 @@ router.post('/api/register', register);
 router.post('/api/login', login);
 
 // Rute untuk lupa password
-router.get('/api/forgot-password/:username', forgotPassword);
+router.post('/api/forgot-password', forgotPassword);
 
 //Get
 
@@ -100,9 +99,6 @@ router.get('/api/review/product/:productId', getReviewsByProduct);
 router.get('/api/review/brand/:brandId', getReviewsByBrand);
 
 //Add
-
-// Rute untuk menambahkan user baru
-router.post('/api/user/add',upload.single('user_image'), addUser);
 
 // Rute untuk menambah produk baru
 router.post('/api/product/add',upload.single('product_image'), addProduct);
