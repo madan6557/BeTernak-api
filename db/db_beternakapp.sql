@@ -94,7 +94,7 @@ CREATE TABLE `products` (
   `product_cat` int(100) NOT NULL,
   `product_brand` int(100) NOT NULL,
   `product_title` varchar(255) NOT NULL,
-  `product_price` int(100) NOT NULL,
+  `product_price` float(100) NOT NULL,
   `product_desc` text NOT NULL,
   `product_image` text NOT NULL,
   `product_keywords` text NOT NULL,
