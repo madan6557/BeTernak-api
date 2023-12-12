@@ -231,7 +231,7 @@ const getBrandsByUserId = (req, res) => {
       return
     }
 
-    res.json({ data: results })
+    res.status(200).json({ data: results })
   })
 }
 

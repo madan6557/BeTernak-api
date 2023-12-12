@@ -69,8 +69,8 @@ const { uploadToGCS} = require('../gcs');
           return
         }
   
-        res.json({
-          message: 'Merek baru berhasil ditambahkan',
+        res.status(200).json({
+          message: 'New brand added successfully',
           brandId: results.insertId,
         })
       })

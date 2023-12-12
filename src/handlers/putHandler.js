@@ -157,7 +157,7 @@ const updateUserById = async (req, res) => {
           return
         }
   
-        res.json({ message: 'Mengupdate informasi brand berhasil' })
+        res.status(200).json({ message: 'Brand informations update successfully' })
       })
     } catch (error) {
       console.error('Error updating brand:', error)

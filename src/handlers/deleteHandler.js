@@ -93,17 +93,8 @@ const deleteUserById = (req, res) => {
         return
       }
   
-      res.json({ message: 'Brand berhasil dihapus' })
+      res.status(200).json({ message: 'Brand deleted succesfully!' })
     })
-  }
-  
-  const getPrediction = async (req, res) => {
-    // Contoh penggunaan model machine learning
-    const inputData = req.body.data
-    const prediction = await mlConnection.predictUsingMLModel(inputData)
-  
-    // Lakukan sesuatu dengan hasil prediksi
-    res.json({ prediction })
   }
 
   module.exports = {
