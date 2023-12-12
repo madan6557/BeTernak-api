@@ -11,6 +11,7 @@ const {
 
 const {
   getUserInfoById,
+  getUserRef,
   getProductByCategory,
   getProductById,
   getProductByBrand,
@@ -67,6 +68,9 @@ router.post('/api/forgot-password', forgotPassword);
 
 // Rute mendapatkan user info berdsarkan ID
 router.get('/api/user/id/:userId', getUserInfoById);
+
+// Rute mendapatkan referensi user berdsarkan ID
+router.get('/api/user/ref/:userId', getUserRef);
 
 // Rute untuk mendapatkan produk berdasarkan kategori
 router.get('/api/product/category/:categoryId', getProductByCategory);
