@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Des 2023 pada 13.42
+-- Waktu pembuatan: 12 Des 2023 pada 08.39
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `animals`
+--
+
+CREATE TABLE `animals` (
+  `animal_id` int(11) NOT NULL,
+  `animal_title` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `animals`
+--
+
+INSERT INTO `animals` (`animal_id`, `animal_title`) VALUES
+(1, 'Kuda'),
+(2, 'Sapi'),
+(3, 'Kelinci'),
+(4, 'Ayama');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `brands`
 --
 
@@ -40,7 +61,7 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`brand_id`, `brand_title`, `user_id`, `location`, `brand_image`) VALUES
-(4, 'Toko Sayur', 9, '00,000,00,0', 'images');
+(4, 'Toko Sayur', 1, '00,000,00,0', 'images');
 
 -- --------------------------------------------------------
 
@@ -109,6 +130,13 @@ CREATE TABLE `products` (
   `sales` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_desc`, `product_image`, `product_keywords`, `stock`, `sales`) VALUES
+(6, 1, 4, 'Sayur', 1000, 'Sayur MAYUR', 'sayur', 'sayur, sayur mayur', 100, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -142,21 +170,31 @@ CREATE TABLE `user_info` (
   `isAdmin` tinyint(1) NOT NULL,
   `location` text NOT NULL,
   `no_rek` varchar(100) NOT NULL,
-  `user_image` text NOT NULL
+  `user_image` text NOT NULL,
+  `cat_id` int(10) NOT NULL,
+  `animal_id1` int(10) NOT NULL,
+  `animal_id2` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `user_info`
 --
 
-INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `username`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`, `user_image`) VALUES
-(1, 'Lorem', 'Ipsum', 'testajabwanng@gmail.com', 'lorem', '$2b$10$IAEJVfsjsNskRu2z/PijHuR6aQACa2JJACg7V7WVtD7VWZnOC3GjK', 'Jln. Jalan, Desa, RT/RW, Kec. Kecamatan, Kab. Kabupaten, Provinsi, Negara', 'Bumi', 0, '000, 000, 000', '123123123123123', 'image URL'),
-(8, '', '', '', 'sora', '$2b$10$7oAUIjLipPSel0a0K5NzF.RZB2ki/nKFy063Pg1zK7ydyUl9CDTBO', '', '', 0, '', '', ''),
-(9, '', '', '', 'sola', '$2b$10$X1S6m6/NPkzHh5rf3TSdWuzFmu45bU2V1SwSEU3xkQDuvYPEjmff6', '', '', 0, '', '', '');
+INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `username`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`, `user_image`, `cat_id`, `animal_id1`, `animal_id2`) VALUES
+(1, 'Lorem', 'Ipsum', 'testajabwanng@gmail.com', 'lorem', '$2b$10$IAEJVfsjsNskRu2z/PijHuR6aQACa2JJACg7V7WVtD7VWZnOC3GjK', 'Jln. Jalan, Desa, RT/RW, Kec. Kecamatan, Kab. Kabupaten, Provinsi, Negara', 'Bumi', 0, '000, 000, 000', '123123123123123', 'image URL', 1, 1, 2),
+(8, '', '', '', 'sora', '$2b$10$7oAUIjLipPSel0a0K5NzF.RZB2ki/nKFy063Pg1zK7ydyUl9CDTBO', '', '', 0, '', '', '', 1, 1, 2),
+(9, '', '', '', 'sola', '$2b$10$X1S6m6/NPkzHh5rf3TSdWuzFmu45bU2V1SwSEU3xkQDuvYPEjmff6', '', '', 0, '', '', '', 1, 2, 2),
+(11, '', '', 'testajabwanng@gmail.com', 'ipsum', '$2b$10$FA1y5LJpfkCpyXD1pPMELOe8CF/OU5GUL7O8u.Nje..C4yDBOsw1a', '', '', 0, '', '', '', 1, 2, 3);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `animals`
+--
+ALTER TABLE `animals`
+  ADD PRIMARY KEY (`animal_id`);
 
 --
 -- Indeks untuk tabel `brands`
@@ -196,8 +234,8 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`),
-  ADD KEY `product_cat` (`product_cat`,`product_brand`,`product_price`),
-  ADD KEY `product_brand` (`product_brand`);
+  ADD KEY `product_brand` (`product_brand`),
+  ADD KEY `product_cat` (`product_cat`,`product_brand`) USING BTREE;
 
 --
 -- Indeks untuk tabel `review`
@@ -212,17 +250,26 @@ ALTER TABLE `review`
 -- Indeks untuk tabel `user_info`
 --
 ALTER TABLE `user_info`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `cat_id` (`cat_id`,`animal_id1`,`animal_id2`),
+  ADD KEY `animal_id1` (`animal_id1`),
+  ADD KEY `animals_id1` (`animal_id2`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `animals`
+--
+ALTER TABLE `animals`
+  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `cart`
@@ -246,7 +293,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `review`
@@ -258,7 +305,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT untuk tabel `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -298,6 +345,14 @@ ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `review_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `user_info`
+--
+ALTER TABLE `user_info`
+  ADD CONSTRAINT `user_info_ibfk_1` FOREIGN KEY (`animal_id1`) REFERENCES `animals` (`animal_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_info_ibfk_2` FOREIGN KEY (`animal_id2`) REFERENCES `animals` (`animal_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_info_ibfk_3` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`cat_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
