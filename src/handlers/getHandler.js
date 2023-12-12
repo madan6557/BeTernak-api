@@ -38,6 +38,41 @@ const getUserInfoById = (req, res) => {
   })
 }
 
+const getUserRef = (req, res) => {
+  const userId = req.params.userId;
+  const query = `
+    SELECT  
+      categories.cat_title, 
+      animals1.animal_title AS animal_title_1, 
+      animals2.animal_title AS animal_title_2
+    FROM 
+      user_info
+    INNER JOIN 
+      categories ON user_info.cat_id = categories.cat_id
+    INNER JOIN 
+      animals AS animals1 ON user_info.animal_id1 = animals1.animal_id
+    INNER JOIN 
+      animals AS animals2 ON user_info.animal_id2 = animals2.animal_id
+    WHERE 
+      user_info.user_id = ?`;
+
+      db.query(query, [userId], (err, results) => {
+        if (err) {
+          console.error('Error executing query:', err)
+          res.status(500).json({ error: 'Internal Server Error' })
+          return
+        }
+    
+        if (results.length === 0) {
+          res.status(404).json({ error: 'User not found' })
+          return
+        }
+    
+        res.status(200).json({ results })
+      })
+};
+
+
 const getProductByCategory = (req, res) => {
   const categoryId = req.params.categoryId
   const query = 'SELECT * FROM products WHERE product_cat = ?'
@@ -61,7 +96,7 @@ const getProductByCategory = (req, res) => {
       }
     })
 
-    res.json({ data: productsWithImageUrl })
+    res.status(200).json({ data: productsWithImageUrl })
   })
 }
 
@@ -88,7 +123,7 @@ const getProductById = (req, res) => {
       }
     })
 
-    res.json({ data: productsWithImageUrl })
+    res.status(200).json({ data: productsWithImageUrl })
   })
 }
 
@@ -115,7 +150,7 @@ const getProductByBrand = (req, res) => {
       }
     })
 
-    res.json({ data: productsWithImageUrl })
+    res.status(200).json({ data: productsWithImageUrl })
   })
 }
 
@@ -308,6 +343,7 @@ const getReviewsByBrand = (req, res) => {
 
 module.exports = {
     getUserInfoById,
+    getUserRef,
     getProductByCategory,
     getProductById,
     getProductByBrand,
