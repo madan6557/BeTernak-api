@@ -1,9 +1,8 @@
 // handler/paymentHandler.js
-const axios = require("axios");
-const { MidtransClient } = require("midtrans-client");
+const { MidtransClient} = require("midtrans-client");
 const db = require("../db");
 
-const midtransClient = new MidtransClient({
+let Snap = new MidtransClient.snap({
   isProduction: false,
   serverKey: "SB-Mid-server-EoA5hBabN-TqLI0j8LQVEbXt",
   clientKey: "SB-Mid-client-YG8DwhYhczEsayT4",
@@ -61,7 +60,7 @@ const createPayment = async (req, res) => {
         // Buat transaksi di Midtrans menggunakan Snap API
         const transactionDetails = {
           orderId: `ORDER-${orderId}`,
-          grossAmount: productPrice * quantity, // Sesuaikan dengan jumlah yang sesuai dengan aplikasi Anda
+          grossAmount: productPrice * quantity,
         };
   
         try {
