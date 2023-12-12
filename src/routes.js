@@ -50,7 +50,7 @@ const {
   deleteBrandById,
 } = require('./handlers/deleteHandler');
 
-const { createPayment, completePayment} = require('./handlers/paymentHandler');
+const { createAndPaymentURL, completePayment} = require('./handlers/paymentHandler');
 
 const storage = multer.memoryStorage(); // Gunakan memori untuk menyimpan file
 const upload = multer({ storage: storage });
@@ -122,7 +122,7 @@ router.post('/api/cart/add', addToCart);
 router.post('/api/review/add', addProductReview);
 
 // Router untuk membuat payment gateaway
-router.post('/api/create-payment', createPayment);
+router.post('/api/create-payment', createAndPaymentURL);
 
 // Router untuk memastikan status payment
 router.post('/api/complete-payment', completePayment);
