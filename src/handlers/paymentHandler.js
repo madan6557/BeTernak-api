@@ -48,7 +48,7 @@ const createAndPaymentURL = async (req, res) => {
 
   db.query(
     "INSERT INTO orders (user_id, product_id, qty, p_status) VALUES (?, ?, ?, ?)",
-    [userId, productId, quantity, "pending"],
+    [userId, productId, qty, "pending"],
     async (error, result) => {
       if (error) {
         console.error(error);
