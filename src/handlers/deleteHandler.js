@@ -29,7 +29,7 @@ const deleteUserById = (req, res) => {
         return
       }
   
-      res.json({ message: 'Produk berhasil dihapus' })
+      res.status(200).json({ message:  'Product deleted successfully!' })
     })
   }
   
@@ -45,7 +45,7 @@ const deleteUserById = (req, res) => {
         return
       }
   
-      res.json({ message: 'Pesanan berhasil dihapus' })
+      res.status(200).json({ message: 'Order deleted successfully!' })
     })
   }
   
@@ -61,7 +61,7 @@ const deleteUserById = (req, res) => {
         return
       }
   
-      res.json({ message: 'Keranjang berhasil dihapus' })
+      res.json({ message: 'Cart deleted successfully!' })
     })
   }
   
@@ -77,7 +77,7 @@ const deleteUserById = (req, res) => {
         return
       }
   
-      res.json({ message: 'Reviews berhasil dihapus' })
+      res.json({ message: 'Review deleted successfully!' })
     })
   }
   

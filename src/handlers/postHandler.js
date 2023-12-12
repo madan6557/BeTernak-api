@@ -31,7 +31,7 @@ const { uploadToGCS} = require('../gcs');
           return
         }
   
-        res.json({ message: 'Produk berhasil ditambahkan' })
+        res.status(200).json({ message: 'Product added successfully!' })
       })
     } catch (error) {
       console.error('Error adding product:', error)
@@ -93,7 +93,7 @@ const { uploadToGCS} = require('../gcs');
           return
         }
   
-        res.json({ message: 'Order berhasil ditambahkan' })
+        res.status(200).json({ message: 'Order added successfully!' })
       })
     } catch (error) {
       console.error('Error adding order:', error)
@@ -113,7 +113,7 @@ const { uploadToGCS} = require('../gcs');
         return
       }
   
-      res.json({ message: 'Item berhasil dimasukkan ke keranjang' })
+      res.status(200).json({ message: 'Item successfully added to cart' })
     })
   }
   
@@ -129,7 +129,7 @@ const { uploadToGCS} = require('../gcs');
         return
       }
   
-      res.json({ message: 'Review berhasil ditambahkan' })
+      res.json({ message: 'Review added successfully!' })
     })
   }
 
