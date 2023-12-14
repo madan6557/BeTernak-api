@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Des 2023 pada 08.57
+-- Waktu pembuatan: 12 Des 2023 pada 12.01
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -77,6 +77,13 @@ CREATE TABLE `cart` (
   `qty` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `product_id`, `ip_add`, `user_id`, `qty`) VALUES
+(3, 6, '12312312342', 1, 15);
+
 -- --------------------------------------------------------
 
 --
@@ -110,6 +117,14 @@ CREATE TABLE `orders` (
   `transfer_id` varchar(255) NOT NULL,
   `p_status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user_id`, `product_id`, `qty`, `transfer_id`, `p_status`) VALUES
+(3, 1, 6, 12, '1231312312313', 'pending'),
+(4, 1, 6, 15, '1231312312313', 'done');
 
 -- --------------------------------------------------------
 
@@ -151,6 +166,14 @@ CREATE TABLE `review` (
   `rate` int(10) NOT NULL,
   `comment` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `review`
+--
+
+INSERT INTO `review` (`review_id`, `user_id`, `brand_id`, `product_id`, `rate`, `comment`) VALUES
+(3, 1, 4, 6, 5, 'Sangat bersayur dan sangat MAYUR'),
+(4, 1, 4, 6, 1, 'tidak bersayur dan tidak MAYUR');
 
 -- --------------------------------------------------------
 
@@ -208,10 +231,9 @@ ALTER TABLE `brands`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
-  ADD UNIQUE KEY `user_id` (`user_id`),
-  ADD UNIQUE KEY `product_id` (`product_id`),
-  ADD UNIQUE KEY `qty` (`qty`),
-  ADD KEY `product_id_2` (`product_id`,`user_id`,`qty`);
+  ADD KEY `product_id_2` (`product_id`,`user_id`,`qty`),
+  ADD KEY `user_id` (`user_id`) USING BTREE,
+  ADD KEY `product_id` (`product_id`) USING BTREE;
 
 --
 -- Indeks untuk tabel `categories`
@@ -275,7 +297,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cart_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
@@ -287,19 +309,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `review`
 --
 ALTER TABLE `review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_info`

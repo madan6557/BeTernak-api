@@ -72,7 +72,6 @@ const getUserRef = (req, res) => {
       })
 };
 
-
 const getProductByCategory = (req, res) => {
   const categoryId = req.params.categoryId
   const query = 'SELECT * FROM products WHERE product_cat = ?'
@@ -209,7 +208,7 @@ const getOrdersByUserId = (req, res) => {
       return
     }
 
-    res.json({ data: results })
+    res.status(200).json({ data: results })
   })
 }
 
@@ -241,7 +240,7 @@ const getOrdersById = (req, res) => {
       return
     }
 
-    res.json({ data: results })
+    res.status(200).json({ data: results })
   })
 }
 
@@ -298,7 +297,7 @@ const getCartByUserId = (req, res) => {
       }
     })
 
-    res.json({ data: productsWithImageUrl })
+    res.status(200).json({ data: productsWithImageUrl })
   })
 }
 
@@ -318,7 +317,7 @@ const getReviewsByProduct = (req, res) => {
       return
     }
 
-    res.json({ data: results })
+    res.status(200).json({ data: results })
   })
 }
 
@@ -337,7 +336,7 @@ const getReviewsByBrand = (req, res) => {
       return
     }
 
-    res.json({ data: results })
+    res.status(200).json({ data: results })
   })
 }
 
