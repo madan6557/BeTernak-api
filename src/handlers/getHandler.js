@@ -72,6 +72,32 @@ const getUserRef = (req, res) => {
       })
 };
 
+const getAllProduct = (req, res) => {
+  const query = 'SELECT * FROM products'
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err)
+      res.status(500).json({ error: 'Internal Server Error' })
+      return
+    }
+
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Product not found' })
+      return
+    }
+
+    const productsWithImageUrl = results.map((product) => {
+      return {
+        ...product,
+        product_image: getGCSImageUrl('product-images', product.product_image),
+      }
+    })
+
+    res.status(200).json({ data: productsWithImageUrl })
+  })
+}
+
 const getProductByCategory = (req, res) => {
   const categoryId = req.params.categoryId
   const query = 'SELECT * FROM products WHERE product_cat = ?'
@@ -150,6 +176,32 @@ const getProductByBrand = (req, res) => {
     })
 
     res.status(200).json({ data: productsWithImageUrl })
+  })
+}
+
+const getAllBrand = (req, res) => {
+  const query = 'SELECT * FROM brands'
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err)
+      res.status(500).json({ error: 'Internal Server Error' })
+      return
+    }
+
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Brand not found' })
+      return
+    }
+
+    const brandsWithImageUrl = results.map((brand) => {
+      return {
+        ...brand,
+        brand_image: getGCSImageUrl('brand-images', brand.brand_image),
+      }
+    })
+
+    res.status(200).json({ data: brandsWithImageUrl })
   })
 }
 
@@ -343,11 +395,13 @@ const getReviewsByBrand = (req, res) => {
 module.exports = {
     getUserInfoById,
     getUserRef,
+    getAllProduct,
     getProductByCategory,
     getProductById,
     getProductByBrand,
     getOrdersByUserId,
     getOrdersById,
+    getAllBrand,
     getBrandsByUserId,
     getCartByUserId,
     getReviewsByProduct,

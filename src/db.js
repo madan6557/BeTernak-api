@@ -1,12 +1,11 @@
-// src/db.js
 const mysql = require('mysql');
 
 // Konfigurasi koneksi ke Cloud SQL
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'db_beternakapp',
+  host: '34.128.97.242', // IP external Cloud SQL
+  user: 'root', // Ganti dengan nama pengguna database
+  password: 'admin', // Ganti dengan kata sandi database
+  database: 'db_beternakapp', // Ganti dengan nama database
 });
 
 // Buka koneksi
@@ -18,4 +17,5 @@ connection.connect((err) => {
   console.log('Connected to Cloud SQL');
 });
 
-module.exports = connection;
+module.exports = connection; 
+ 
