@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Des 2023 pada 12.01
+-- Waktu pembuatan: 15 Des 2023 pada 07.22
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -16,9 +16,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
---
---
 
 -- --------------------------------------------------------
 
@@ -39,7 +36,7 @@ INSERT INTO `animals` (`animal_id`, `animal_title`) VALUES
 (1, 'Kuda'),
 (2, 'Sapi'),
 (3, 'Kelinci'),
-(4, 'Ayama');
+(4, 'Ayam');
 
 -- --------------------------------------------------------
 
@@ -60,7 +57,8 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`brand_id`, `brand_title`, `user_id`, `location`, `brand_image`) VALUES
-(4, 'Toko Sayur', 1, '00,000,00,0', 'images');
+(6, 'Peternakan A247BSY2543', 21, '000, 000, 000', ''),
+(7, 'Peternakan C216BSY3194', 20, '000, 000, 000', '');
 
 -- --------------------------------------------------------
 
@@ -81,7 +79,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `product_id`, `ip_add`, `user_id`, `qty`) VALUES
-(3, 6, '12312312342', 1, 15);
+(12, 11, '1000000', 16, 10);
 
 -- --------------------------------------------------------
 
@@ -99,8 +97,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`cat_id`, `cat_title`) VALUES
-(1, 'Sayur'),
-(2, 'Hewan');
+(1, 'Ternak Besar'),
+(2, 'Ternak Sedang'),
+(3, 'Ternak Kecil'),
+(4, 'Unggas'),
+(5, 'Lainnya');
 
 -- --------------------------------------------------------
 
@@ -122,8 +123,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `product_id`, `qty`, `transfer_id`, `p_status`) VALUES
-(3, 1, 6, 12, '1231312312313', 'pending'),
-(4, 1, 6, 15, '1231312312313', 'done');
+(6, 16, 8, 1, '1000000', 'Done'),
+(7, 16, 10, 10, '1000000', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -149,7 +150,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_desc`, `product_image`, `product_keywords`, `stock`, `sales`) VALUES
-(6, 1, 4, 'Sayur', 1000, 'Sayur MAYUR', 'sayur', 'sayur, sayur mayur', 100, 0);
+(8, 1, 6, 'Sapi Legion', 125000000, 'Sapi ini memiliki spesifikasi Ram 32 GB dengan Memori SSD 64GB So-DIM, Layar OLED 100% SRGB VGA Nvidia RTX 8080ti', '', '', 20, 0),
+(9, 3, 6, 'Kelinci Gunung', 200000, 'Kelinci ini cocok dijadikan hewan ternak bagi yang tinggal dipegunungan yang sejuk', '', '', 50, 0),
+(10, 3, 6, 'Kelinci Alaska', 250000, 'Kelinci ini memiliki ukuran yang lebih besar daripada kelinci pada umumnya', '', '', 30, 0),
+(11, 4, 7, 'Ayam Petelur', 125000, 'Ayam ini dapat menghasilkan 5 telur perhari jika diberi pertamax', '', '', 130, 0),
+(12, 4, 7, 'Ayam Buff Orpington', 100000, 'Ayam petelur Buff Orpington merupakan jenis ayam petelur yang juga berasal dari Inggris. Ayam ini jinak dan acapkali tidak memerlukan sebuah tempat berternak khusus. Artinya, ayam ini bisa dibiarkan untuk tinggal di halaman.', '', '', 100, 0),
+(13, 2, 7, 'Kambing Gunung', 1400000, 'Dari namanya udah jelas bwang', '', '', 40, 0),
+(14, 5, 7, 'Lebah Madu', 1000000, 'Dapat diberi per box sarang', '', '', 25, 0);
 
 -- --------------------------------------------------------
 
@@ -171,8 +178,8 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`review_id`, `user_id`, `brand_id`, `product_id`, `rate`, `comment`) VALUES
-(3, 1, 4, 6, 5, 'Sangat bersayur dan sangat MAYUR'),
-(4, 1, 4, 6, 1, 'tidak bersayur dan tidak MAYUR');
+(5, 16, 6, 8, 5, 'Mantap bang, packagingnnya bagus, barang sampai dengan baik dan benar'),
+(6, 18, 6, 8, 5, 'Barang sampai dengan aman, layanan kelewat ramah');
 
 -- --------------------------------------------------------
 
@@ -203,10 +210,13 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `username`, `password`, `address1`, `address2`, `isAdmin`, `location`, `no_rek`, `user_image`, `cat_id`, `animal_id1`, `animal_id2`) VALUES
-(1, 'Lorem', 'Ipsum', 'testajabwanng@gmail.com', 'lorem', '$2b$10$IAEJVfsjsNskRu2z/PijHuR6aQACa2JJACg7V7WVtD7VWZnOC3GjK', 'Jln. Jalan, Desa, RT/RW, Kec. Kecamatan, Kab. Kabupaten, Provinsi, Negara', 'Bumi', 0, '000, 000, 000', '123123123123123', 'image URL', 1, 1, 2),
-(8, '', '', '', 'sora', '$2b$10$7oAUIjLipPSel0a0K5NzF.RZB2ki/nKFy063Pg1zK7ydyUl9CDTBO', '', '', 0, '', '', '', 1, 1, 2),
-(9, '', '', '', 'sola', '$2b$10$X1S6m6/NPkzHh5rf3TSdWuzFmu45bU2V1SwSEU3xkQDuvYPEjmff6', '', '', 0, '', '', '', 1, 2, 2),
-(11, '', '', 'testajabwanng@gmail.com', 'ipsum', '$2b$10$FA1y5LJpfkCpyXD1pPMELOe8CF/OU5GUL7O8u.Nje..C4yDBOsw1a', '', '', 0, '', '', '', 1, 2, 3);
+(1, '', '', 'admin@beternak.com', 'admin', '$2b$10$okiykhGzZz3FSzyu.TU6fuhNoF7GW77FcWOOQb57vuuRBha2.VkUa', '', '', 1, '', '', '', 1, 1, 2),
+(16, '', '', 'M216BSY1845@beternak.com', 'M216BSY1845', '$2b$10$21Ume/QRImvS/Cw0jt7iiu0E52N88s5DASvB1ayLnqmgI0rUNla/G', '', '', 0, '', '', '', 1, 1, 2),
+(17, '', '', 'M247BSY0380@beternak.com', 'M247BSY0380', '$2b$10$X.cAGDgRpJc5MA1tc6rf7epxi.jUcD4F3yc9HDx5F77SF/Wwdj1Lq', '', '', 0, '', '', '', 1, 1, 2),
+(18, '', '', 'M491BSY0864@beternak.com', 'M491BSY0864', '$2b$10$.1sGhvgys7nsbeFhnoZaVOvyVOCxGMyQNAciVRbLFoxDLrjdkaiXa', '', '', 0, '', '', '', 1, 1, 2),
+(19, '', '', 'C247BSY3737@beternak.com', 'C247BSY3737', '$2b$10$s1Q.nnITjoh1hDv9UQ2ymOoA7OSUm3rEizpyc4.ZR9OWI0/eHGqP6', '', '', 0, '', '', '', 1, 1, 2),
+(20, '', '', 'C216BSY3194@beternak.com', 'C216BSY3194', '$2b$10$aytSx8BviM969Aetn/HBOehLiPPP1BaNyTSfwhqWUUDVEsVNWRx36', '', '', 0, '', '', '', 1, 1, 2),
+(21, '', '', 'A247BSY2543@beternak.com', 'A247BSY2543', '$2b$10$j2KsBDKBCMfOItXjR9rh3OLFT2R8hi63uqYxybRRlBZlWyXWI3HAW', '', '', 0, '', '', '', 1, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -274,7 +284,7 @@ ALTER TABLE `user_info`
   ADD PRIMARY KEY (`user_id`),
   ADD KEY `cat_id` (`cat_id`,`animal_id1`,`animal_id2`),
   ADD KEY `animal_id1` (`animal_id1`),
-  ADD KEY `animals_id1` (`animal_id2`);
+  ADD KEY `animal_id2` (`animal_id2`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -284,49 +294,49 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT untuk tabel `animals`
 --
 ALTER TABLE `animals`
-  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `cart_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `review`
 --
 ALTER TABLE `review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -371,9 +381,9 @@ ALTER TABLE `review`
 -- Ketidakleluasaan untuk tabel `user_info`
 --
 ALTER TABLE `user_info`
-  ADD CONSTRAINT `user_info_ibfk_1` FOREIGN KEY (`animal_id1`) REFERENCES `animals` (`animal_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_info_ibfk_2` FOREIGN KEY (`animal_id2`) REFERENCES `animals` (`animal_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_info_ibfk_3` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`cat_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_info_ibfk_1` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`cat_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_info_ibfk_2` FOREIGN KEY (`animal_id1`) REFERENCES `animals` (`animal_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_info_ibfk_3` FOREIGN KEY (`animal_id2`) REFERENCES `animals` (`animal_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
