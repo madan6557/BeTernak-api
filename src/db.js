@@ -6,7 +6,6 @@ const connection = mysql.createConnection({
   user: 'root', // Ganti dengan nama pengguna database
   password: 'admin', // Ganti dengan kata sandi database
   database: 'db_beternakapp', // Ganti dengan nama database
-  port: 3306, // Port standar MySQL
 });
 
 // Buka koneksi
