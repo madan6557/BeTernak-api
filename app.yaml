@@ -1,8 +1,5 @@
-runtime: nodejs14
+runtime: nodejs18
 service: default
-
-env_variables:
-  NODE_ENV: 'development'
 
 handlers:
 - url: /.*
