@@ -12,12 +12,14 @@ const {
 const {
   getUserInfoById,
   getUserRef,
+  getAllProduct,
   getProductByCategory,
   getProductById,
   getProductByBrand,
   getBrandById,
   getOrdersByUserId,
   getOrdersById,
+  getAllBrand,
   getBrandsByUserId,
   getCartByUserId,
   getReviewsByProduct,
@@ -72,11 +74,17 @@ router.get('/api/user/id/:userId', getUserInfoById);
 // Rute mendapatkan referensi user berdsarkan ID
 router.get('/api/user/ref/:userId', getUserRef);
 
+// Rute untuk mendapatkan semua detail produk
+router.get('/api/product/all', getAllProduct);
+
 // Rute untuk mendapatkan produk berdasarkan kategori
 router.get('/api/product/category/:categoryId', getProductByCategory);
 
 // Rute untuk mendapatkan produk berdasarkan ID produk
 router.get('/api/product/id/:productId', getProductById);
+
+// Rute untuk mendapatkan semua brand
+router.get('/api/brand/all', getAllBrand);
 
 // Rute untuk mendapatkan produk berdasarkan ID brand
 router.get('/api/product/brand/:brandId', getProductByBrand);
