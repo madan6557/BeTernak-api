@@ -68,7 +68,7 @@ const login = async (req, res) => {
           // Buat token JWT sebagai tanda otentikasi
           const token = jwt.sign({ userId: user.user_id, username: user.username }, 'secret_key', { expiresIn: '1h' });
 
-          res.status(200).json({ message: 'Log in succes!', token });
+          res.status(200).json({ message: 'Log in succes!', token, userId: user.user_id });
         } else {
           res.status(401).json({ error: 'Invalid credentials' });
         }

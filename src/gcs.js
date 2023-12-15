@@ -7,7 +7,7 @@ const storage = new Storage({
 });
 
 // Gantilah 'your-bucket-name' dengan nama bucket GCS Anda
-const bucketName = 'okheh21'
+const bucketName = 'okheh22'
 const bucket = storage.bucket(bucketName);
 
 const uploadToGCS = (fileBuffer, destination, contentType) => {

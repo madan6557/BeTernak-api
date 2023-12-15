@@ -1,12 +1,12 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
 // Konfigurasi koneksi ke Cloud SQL
 const connection = mysql.createConnection({
-  host: 'localhost', //tidak perlu mengubah ini karena akan diabaikan di Google Cloud SQL
+  host: '34.128.97.242', // IP external Cloud SQL
   user: 'root', // Ganti dengan nama pengguna database
-  password: '', // Ganti dengan kata sandi database
+  password: 'admin', // Ganti dengan kata sandi database
   database: 'db_beternakapp', // Ganti dengan nama database
-  socketPath: '/cloudsql/your-project-id:your-instance-name', // Ganti dengan path socket Cloud SQL
+  port: 3306, // Port standar MySQL
 });
 
 // Buka koneksi
@@ -18,4 +18,5 @@ connection.connect((err) => {
   console.log('Connected to Cloud SQL');
 });
 
-module.exports = connection;
+module.exports = connection; 
+ 
