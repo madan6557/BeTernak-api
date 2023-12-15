@@ -129,7 +129,7 @@ router.post('/api/cart/add', addToCart);
 // Rute untuk menambahkan review product
 router.post('/api/review/add', addProductReview);
 
-// Router untuk membuat payment gateaway
+// Router untuk membuat payment gateway
 router.post('/api/create-payment', createPayment);
 
 // Router untuk memastikan status payment
