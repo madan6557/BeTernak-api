@@ -3,11 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<<<< Temporary merge branch 1
+
 -- Waktu pembuatan: 15 Des 2023 pada 07.22
-=========
--- Waktu pembuatan: 15 Des 2023 pada 12.01
->>>>>>>>> Temporary merge branch 2
+
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
