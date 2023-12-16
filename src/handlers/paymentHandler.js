@@ -1,12 +1,12 @@
 // handler/paymentHandler.js
-const { MidtransClient} = require("midtrans-client");
+const { Snap } = require("midtrans-client");
 const db = require("../db");
 
-let Snap = new MidtransClient.snap({
-  isProduction: false,
-  serverKey: "SB-Mid-server-EoA5hBabN-TqLI0j8LQVEbXt",
-  clientKey: "SB-Mid-client-YG8DwhYhczEsayT4",
-});
+let snapClient = new Snap({
+    isProduction: false,
+    serverKey: "SB-Mid-server-EoA5hBabN-TqLI0j8LQVEbXt",
+    clientKey: "SB-Mid-client-YG8DwhYhczEsayT4",
+  });
 
 const createPayment = async (req, res) => {
     const { userId, productId, quantity } = req.body;
@@ -87,7 +87,7 @@ const createPayment = async (req, res) => {
             },
           };
   
-          Snap.createTransaction(parameter)
+          snapClient.createTransaction(parameter)
             .then((transaction) => {
               // transaction token
               let transactionToken = transaction.token;
