@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 // Konfigurasi koneksi ke Cloud SQL
 const connection = mysql.createConnection({
-  host: '34.128.97.242', // IP external Cloud SQL
+  host: '34.101.69.28', // IP external Cloud SQL
   user: 'root', // Ganti dengan nama pengguna database
   password: 'admin', // Ganti dengan kata sandi database
   database: 'db_beternakapp', // Ganti dengan nama database
