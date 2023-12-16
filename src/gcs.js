@@ -1,13 +1,14 @@
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 
-const keyFilePath = path.join(__dirname, '../key/credentials.json');
+const keyFilePath = path.join(__dirname, './credentials.json');
+
 const storage = new Storage({
   keyFilename: keyFilePath,
 });
 
 // Gantilah 'your-bucket-name' dengan nama bucket GCS Anda
-const bucketName = 'okheh22'
+const bucketName = 'capstone-ecommerce-beternak.appspot.com'
 const bucket = storage.bucket(bucketName);
 
 const uploadToGCS = (fileBuffer, destination, contentType) => {
