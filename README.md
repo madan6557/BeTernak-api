@@ -10,7 +10,10 @@ Proyek ini adalah implementasi API untuk Apliaksi Ecomerce BeTernak. API ini mem
 3. Pindah ke direktori proyek
    ```bash
    cd BeTernak-api
-5. Deploy ke App Engine
+2. Instal dependencies
+   ```bash
+   npm install
+4. Deploy ke App Engine
    ```bash
    gcloud app deploy
 
