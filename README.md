@@ -1,7 +1,7 @@
-# Nama Proyek
+# BeTernak - Beli Ternak
 
 ## Deskripsi
-Proyek ini adalah implementasi API untuk [nama aplikasi atau layanan]. API ini memungkinkan pengguna untuk [fungsi utama atau fitur-fitur yang disediakan].
+Proyek ini adalah implementasi API untuk Apliaksi Ecomerce BeTernak. API ini memungkinkan pengguna untuk CRUD layaknya aplikasi Ecomerce.
 
 ## Deployment
 1. Clone repositori ini ke CLoud Shell Anda:
